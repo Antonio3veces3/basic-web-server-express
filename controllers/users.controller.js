@@ -68,14 +68,14 @@ const usersPOST = async (req, res = response) => {
 };
 const usersDELETE = async(req, res) => {
     const {id} = req.params;
-
     //Borrado fisico
     const user = await User.findByIdAndUpdate(id, {status: false});
 
     res.json({
         ok: true,
         msg: 'DELETE API controller',
-        user
+        user,
+        userValidated: req.user 
     })
     res.end();
 };
