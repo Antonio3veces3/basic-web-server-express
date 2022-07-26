@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 const { generateJWT } = require('../helpers/generate-JWT');
+const { googleVerify } = require('../helpers/google-verify');
+
 
 
 const login = async (req = request,res = response)=>{
@@ -38,10 +40,60 @@ const login = async (req = request,res = response)=>{
         console.log(error);
         return res.status(500).json({
             error: "Contact the Admin"
-        })
+        });
     }    
 };
 
+
+const googleSignIn = async(req = request, res= response)=>{
+    const {id_token} = req.body;
+
+    try {
+        const {name, img, mail} = await googleVerify(id_token);
+
+        // Verify if the user exists.
+
+        let existsUser = await User.findOne({mail});
+
+        if(!existsUser){
+            const data = {
+                name, 
+                img,
+                mail,
+                google: true,
+                password: ':)'
+            };
+
+            existsUser = new User( data );
+            await existsUser.save();
+        }
+
+        //Verify if the user is active
+        if(!existsUser.status){
+            return res.status(401).json({
+                error: "The user is locked"
+            }); 
+        }
+
+        const token = await generateJWT(existsUser.id);
+
+        res.json({
+            status: 'OK',
+            token,
+            googleUser: existsUser
+        })
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            error: "Incorrect account"
+        });
+    }
+
+};
+
 module.exports= {
-    login
+    login,
+    googleSignIn
 }
