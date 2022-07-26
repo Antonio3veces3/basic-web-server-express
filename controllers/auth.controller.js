@@ -76,7 +76,7 @@ const googleSignIn = async(req = request, res= response)=>{
         }
 
         const token = await generateJWT(existsUser.id);
-
+        console.log(existsUser);
         res.json({
             status: 'OK',
             token,

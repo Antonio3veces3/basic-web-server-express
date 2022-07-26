@@ -28,11 +28,12 @@
     <button id="signOut" class="btn btn-danger" style="margin-top: 15px;">Sign Out</button>
 
     <script>
-        function handleCredentialResponse(response) {
+                
+            function handleCredentialResponse(response) {
 
             const body = {id_token: response.credential}
-
-            fetch('http://localhost:8080/api/auth/google',
+            console.log(body);
+            fetch(`http://localhost:8080/api/auth/google`,
             {
                 method: 'POST',
                 headers: {
@@ -41,10 +42,10 @@
                 body: JSON.stringify(body) //body siempre debe estar serializado
             })
             .then(res => res.json())
-            .then(res => {
-                console.log(res);
+            .then(async (res) => {
                 localStorage.setItem('email', res.googleUser.mail);
                 location.reload();
+                console.log(res);
             })
             .catch(console.log)
             
@@ -57,9 +58,7 @@
             google.accounts.id.revoke( localStorage.getItem('email'), done => {
                 localStorage.clear();
                 location.reload();
-            })
-
-
+            });
         }
       </script>
     <!-- PRUEBA VIEW GET USERS -->
