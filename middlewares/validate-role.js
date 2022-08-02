@@ -1,5 +1,6 @@
 const {request, response}= require('express');
-const user = require('../models/user');
+const { User } = require('../models');
+
 
 const isAdminRole = async(req = request, res= response, next)=>{
     if(!req.user){

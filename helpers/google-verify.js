@@ -21,6 +21,7 @@ async function googleVerify(token= '') {
   // If request specified a G Suite domain:
   // const domain = payload['hd'];
 }
+
 googleVerify().catch(console.error);
 
 module.exports = {

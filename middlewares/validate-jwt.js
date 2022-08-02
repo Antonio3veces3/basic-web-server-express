@@ -1,6 +1,6 @@
 const { request, response }= require('express');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const { User } = require('../models');
 
 
 const validateJWT = async(req = request, res = response, next)=>{
@@ -21,7 +21,7 @@ const validateJWT = async(req = request, res = response, next)=>{
 
         }
         //Verify user admin and active
-        if(!user.status && !user.role == 'ADMIN_ROLE'){
+        if(!user.status || !user.role == 'ADMIN_ROLE'){
             return res.status(401).json({
                 error: `The user doesn't exists || The user isn't Admin`
             });
