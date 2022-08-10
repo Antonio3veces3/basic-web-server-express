@@ -1,4 +1,6 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
+
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
 class Server {
@@ -10,6 +12,7 @@ class Server {
             categories: '/api/categories',
             products: '/api/products',
             users: '/api/users',
+            uploads: '/api/uploads',
             search: '/api/search'
         }
         
@@ -26,7 +29,11 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.static('public'));
-
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        }));
     }
 
     routes() {
@@ -34,7 +41,9 @@ class Server {
         this.app.use(this.paths.users, require('../routes/users.routes'));
         this.app.use(this.paths.products, require('../routes/products.routes'));
         this.app.use(this.paths.categories, require('../routes/categories.routes'));
-        this.app.use(this.paths.search, require('../routes/search.routes'))
+        this.app.use(this.paths.search, require('../routes/search.routes'));
+        this.app.use(this.paths.uploads, require('../routes/uploads.routes'));
+
         this.app.use((req, res) => {
             res.status(404).send({
                 "error": "Page not found"

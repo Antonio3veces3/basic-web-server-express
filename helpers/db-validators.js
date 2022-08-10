@@ -43,6 +43,15 @@ const existsProductID = async (id='')=>{
     }
 };
 
+const validCollections = (collection = '', collections = [])=>{
+    const include = collections.includes(collection);
+    if(!include){
+        throw new Error(`The collection ${collection} is invalid - ${collections}`);
+    }
+
+    return true;
+}
+
 module.exports = {
     isRoleExists,
     emailExists,
@@ -50,5 +59,6 @@ module.exports = {
     existUsername,
     existsCategoryID,
     existsProductID,
-    
+    validCollections,
+
 }
