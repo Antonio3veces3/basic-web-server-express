@@ -13,21 +13,27 @@
     <title>Denied Access</title>
 </head>
 
-<body>
-    <h1>Google Sign-in</h1>
-    <hr>
-    <div id="g_id_onload" 
-        data-client_id="587693924878-miitme57aftc4054hn4ileufo4vri9r9.apps.googleusercontent.com"
-        data-login-uri="https://rest-server-express-tony.herokuapp.com/api/auth/login"
-        data-auto-select="true"
-        data-callback="handleCredentialResponse"
-        data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
-        data-shape="rectangular" data-logo_alignment="left">
+<body class="container">
+
+    <div class="row mt-5">
+        <h1>Google Sign-in</h1>
+        <hr>
+        <div id="g_id_onload" 
+            data-client_id="587693924878-miitme57aftc4054hn4ileufo4vri9r9.apps.googleusercontent.com"
+            data-login-uri="https://rest-server-express-tony.herokuapp.com/api/auth/login"
+            data-auto-select="true"
+            data-callback="handleCredentialResponse"
+            data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+            data-shape="rectangular" data-logo_alignment="left">
+        </div>
     </div>
 
-    <button id="signOut" class="btn btn-danger" style="margin-top: 15px;">Sign Out</button>
+    <div class="col-sm-6">
+        <button id="signOut" class="btn btn-danger" style="margin-top: 15px;">Sign Out</button>
+    </div>
+
 
     <script>
             let url = (window.location.hostname.includes('localhost'))

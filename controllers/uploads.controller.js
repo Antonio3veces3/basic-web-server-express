@@ -156,10 +156,13 @@ const showImage = async(req = request, res = response)=>{
 
   //Limpiar imagen previa
   if(model.img){
+    //AQUI TENGO QUE RETORNAR LA IMAGEN QUE ESTA EN CLOUDINARY
+    /* PARA GUARDAR EL ARCHIVO SUBIDO EN UNA CARPETA 
     const pathImage = path.join(__dirname, '../uploads', collection, model.img);
     if(fs.existsSync(pathImage)){
       return res.sendFile(pathImage);
-    }
+    }*/
+    return res.send(model.img);
   }
   const notImage = path.join(__dirname, '../assets/no-image.jpg');
   res.sendFile(notImage);
